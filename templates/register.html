@@ -1,0 +1,75 @@
+<!DOCTYPE html>    
+<html lang="fr">
+    <head>
+        <title>Inscription</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inscription</title>
+        <style>
+            .bon{
+                background: #f3eff2;
+                border: 0;
+                border-radius: 26px;
+                color: rgb(14, 15, 15);
+            }
+            .box input[type= "text"],.box input[type= "password"]{
+                border: 0;
+                display : block;
+                background : none;
+                margin : 10px auto;
+                border: 2px solid #3498db;
+                padding: 14px 10px;
+                outline: none;
+                color: red;
+                border-radius: 24px;
+                transition: 0.25s;
+                cursor: pointer;
+            }
+            .box input[type= "text"]:focus,.box input[type= "password"]:focus{
+                width: 280px;
+                border-color: #2ecc71;
+            }
+            .box input[type= "submit"]{
+                border: 0;
+                display : block;
+                background : none;
+                margin : 9px auto;
+                border: 2px solid #2ecc71;
+                padding: 14px 20px;
+                outline: none;
+                color: red;
+                border-radius: 24px;
+                transition: 0.25s;
+                cursor: pointer;
+            }
+            .box input[type= "submit"]:hover{
+                background : #6276e9;
+            }
+        </style>
+    </head>
+    </head>
+    <body>
+        {% extends "base.html" %}
+        {% block title %}Mon Examen{% endblock %}
+        {%block content%}
+        <b><p>La première plateforme de cours en Guinée.</p></b>
+        <b><p>Votre réussite c'est juste devant vous.</p></b>
+        <h1>Inscrivez-vous pour continuer.</h1>
+        <form class="box" method="POST" action="/register">
+            <div class="bon">
+                <label for="first_name">Prénom* :</label><br>
+                <input type="text"name="first_name"id="first_name" placeholder="Prénom" required><br>
+                <label for="last_name">Nom de famille* :</label><br>
+                <input type="text"name="last_name"id="last_name" placeholder="Nom de famille" required><br>
+                <label for="username">Nom d'utilisateur* :</label><br>
+                <input type="text" name="username" id="username" placeholder=" Nom d'utilisateur"  required><br>
+                <label for="password">Mot de passe* :</label><br>
+                <input type="password" name="password" id="password" placeholder="Mot de passe" required><br><br>
+                <input type="submit" value="S'inscrire">
+            </div>
+        </form>
+        <p>Merci! De nous faire Confiance.</p>
+        {% endblock %}
+    </body>
+</html>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Inscription réussie</title>
+        <style>
+            
+            a {
+                color: rgb(221, 20, 20);
+                bottom: auto;
+            }
+            .res{
+                background: #e9ebea;
+                border: 0;
+                border-radius: 24px;
+                color: rgb(16, 17, 17);
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        {% extends "base.html" %}
+        {% block title %}MExamen{% endblock %}
+        {%block content%}
+        <div class="res">
+        <h3>Inscription réussie</h3>
+        <b><h4>Bienvenue, {{ first_name }}!</h4></b>
+        <b><p> Vous êtes inscrit avec succès.</p></b>
+        <p>Votre ID utilisateur est : {{user_id}}</p>
+        <p>Merci ! d'avoir choisi notre plateforme , {{first_name}}.</p>
+        <h6>Bonne Chance ! à Vous.</h6>
+        </div>
+        <p>Vous pouvez accéder aux cours disponible: <a href="/cours"> Regardez les cours.</a></p>
+        <p>Merci! De nous faire Confiance.</p>
+    </body>
+    {% endblock %}
+</html> 
+

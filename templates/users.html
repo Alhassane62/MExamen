@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"content="width=device-width,initial-scale=1.0">
+        <title>Liste des utilisateurs</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesone/5.15.4/css/all.min.css">
+        .nav{
+            background-color:;
+        }
+        .navbar-toggler-icon
+
+        footer{
+            border: 3px solid rgb(247, 10, 33);
+            padding: 9px;
+        }
+        .bottom-navbar {
+            left: 1;
+            width: 100%;
+            display: inline-flex ;
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 7px 0;
+            color: red;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 15px;
+        }
+        .nav-item span {
+            font-size: 8px;
+            display:block;            }
+        #logo{
+            width: 102px;
+            height: 90px;
+            border-radius: 50%;
+        }
+        .header{
+            display: flex;
+        }
+        .header h3{
+            margin-left: -20px;
+            color:black;
+        }
+        .bottom-navbar {
+            left: 1;
+            width: 100%;
+            display: inline-flex ;
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 7px 0;
+            color: red;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 15px;
+        }
+        <select id="rating" name="rating">
+            <option value="1">1 etoile</option>
+            <option value="2">2 etoile</option>
+            <option value="3">3 etoile</option>
+            <option value="4">4 etoile</option>
+            <option value="5">5 etoile</option>
+        .nav-item span {
+            font-size: 8px;
+            display:block; 
+        }
+    </head>
+    <body>
+        <h1>Liste des utilisateurs</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nom d'utilisateurs</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+            </tr>
+            {% endfor %}
+            <p>Ceci est la page d'accueil de notre application. </p>
+            <p>Vous pouvez vous inscrire ou vous connecter pour accéder aux cours d'isponibles.</p>
+            <h3>Navigation Principale</h3>
+ <div class="collapse navbar-collapse">
+                     <ul>
+                        <a href="/" class="nav-item active">
+                            <i class="fas fa-home"></i>
+                            <span>Page d'accueil</span>
+                        </a>
+                        <a href="/register" class="nav-item">
+                            <li class="fas fa-user-plus"></li>
+                            <span>Inscription</span>
+                        </a>
+                        <a href="/index" class="nav-item">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Connection</span>
+                        </a>
+                        <a href="/profile" class="nav-item">
+                            <i class="fas fa-user"></i>
+                            <span>Mon compte</span>
+                        </a>
+                     </ul>
+                </div>
+
+        </table>
+    </body>
+</html>

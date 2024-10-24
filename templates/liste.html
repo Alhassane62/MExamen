@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours disponibles</title>
+    <style>
+        .mat{
+            padding: 24px;
+            background: #d3c0c1;
+            border: 0;
+            border-radius: 24px;
+        }
+        .mat:hover{
+            background: #0000;
+            color: #38864f;
+            border-radius: 24px;
+        }
+        .phy{
+            padding: 24px;
+            background: #d3c0c1;
+            border: 0;
+            border-radius: 24px;
+        }
+        .phy:hover{
+            background: #0000;
+            color: #38864f;
+            border-radius: 24px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block title %}Mon Examen{% endblock %}
+    {%block content%}
+    <a href="/profile" ><i class="fas fa-user"></i> Mon compte</a>
+    <h4>Voici les cours disponibles pour le moment.</h4>
+    <ul class="mat">
+        {% for cours in cours1 %}
+            <li>
+                <strong>{{ cours.title }}</strong> - {{ cours.author }} - {{ cours.description }} - {{ cours.pub_date }} 
+                <a href="{{url_for('video1')}}">Regarder la vidéo</a> | <a href="{{ url_for('pdf')}}">Télécharger le PDF</a>
+                <br>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="phy">
+        {% for cours in cours2 %}
+        <li>
+            <strong>{{ cours.title }}</strong> - {{ cours.author }} - {{ cours.description }} - {{ cours.pub_date }}
+            <a href="{{url_for('video2')}}">Regarder la vidéo</a> | <a href="{{ url_for('pdf')}}">Télécharger le PDF</a>
+        </li>
+        {% endfor %}
+    </ul>
+<h5>Bonne Chance ! à Vous.</h5>
+<p>Merci! De nous faire Confiance.</p>
+</body>
+{% endblock %}
+</html>

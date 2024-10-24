@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traitement du paiement</title>
+    </head>
+    <body>
+        <h1>Traitement du paiement</h1>
+        <form action="/process_payment" method="post">
+            <label for="user_id">ID utilisateur :</label><br>
+            <input type="text" id="user_id" name="user_id" required><br>
+            <label for="amount">Montant :</label><br>
+            <input type="text" id="amount" name="amount" required><br>
+            <label for="payment_method">Moyen de paiement :</label><br>
+            <select id="payment_method" name="payment_method" required>
+                <option value="Orange Monney">Orange Monney </option>
+                <option value="MOMO">MOMO GN </option>
+                <option value="PayPal">PayPal </option>
+            </select><br><br>
+            <input type="submit" value="Payer">
+        </form>
+    </body>
+    </html>

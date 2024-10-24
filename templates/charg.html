@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0f0f0; 
+        }
+        .logo {
+            width: 200px;
+            height: auto; 
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Contenu de la page de chargement -->
+    <h2 class="animate__animated animate__bounce"></h2>
+    <h3 class="animate__animated animate__bounce animate__delay-2s"></h3>
+
+
+    <!-- Optionnel : Ajoutez une animation ou une image de chargement -->
+    <img src="{{url_for('logo')}}" alt="Mon Examen" height="40" type="image/png" class="logo">
+    <!-- Message indiquant que l'application est en cours de chargement -->
+    <!-- Script pour rediriger vers la page d'accueil après 2 secondes -->
+    <script>
+        setTimeout(function() {
+            window.location.href = "/aceuill";
+        }, 1000);
+    </script>
+</body>
+</html>
