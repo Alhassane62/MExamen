@@ -6,16 +6,45 @@
     <title>Accueil - Mon Examen</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .carousel-item img {
+            width: 150%;
+            height: 350px; 
+            object-fit: cover; 
+        }
+    </style>
 </head>
 <body>
     {% extends "base.html" %}
-    {% block title %}Mon Examen{% endblock %}
+    {% block title %}MExamen{% endblock %}
 
     {% block content %}
     <div class="container mt-5">
-       
+        <!-- Carrousel d'Images -->
+        <div id="courseCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{url_for('me1')}}" type="image/png" class="d-block w-100" alt="Cours 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url_for('me2')}}" type="image/png" class="d-block w-100" alt="Cours 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url_for('odc')}}" type="image/png" class="d-block w-100" alt="Cours 3">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#courseCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Précédent</span>
+            </a>
+            <a class="carousel-control-next" href="#courseCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Suivant</span>
+            </a>
+        </div>
+
         <main class="mb-5">
-            <div class="card">
+            <div class="card mt-4">
                 <div class="card-body">
                     <h2 class="card-title">Page d'Accueil</h2>
                     <p class="card-text">Ceci est la page d'accueil de notre application.</p>
@@ -25,12 +54,56 @@
                 </div>
             </div>
         </main>
-        
+
+        <!-- Section Cours Populaires -->
+        <div class="container mt-5">
+            <h2>Cours Populaires</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{url_for('me1')}}" type="image/png" class="card-img-top" alt="Cours 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Titre du Cours 1</h5>
+                            <p class="card-text">Une brève description du cours 1.</p>
+                            <a href="/#" class="btn btn-primary">Voir le cours</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{url_for('me2')}}" type="image/png" class="card-img-top" alt="Cours 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Titre du Cours 2</h5>
+                            <p class="card-text">Une brève description du cours 2.</p>
+                            <a href="/#" class="btn btn-primary">Voir le cours</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{url_for('odc')}}" type="image/png" class="card-img-top" alt="Cours 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Titre du Cours 3</h5>
+                            <p class="card-text">Une brève description du cours 3.</p>
+                            <a href="/#" class="btn btn-primary">Voir le cours</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Initialiser le carrousel pour qu'il défile automatiquement toutes les 2 secondes
+        $('.carousel').carousel({
+            interval: 1000
+        });
+    </script>
 </body>
 </html>

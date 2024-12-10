@@ -1,75 +1,127 @@
 <!DOCTYPE html>    
 <html lang="fr">
-    <head>
-        <title>Inscription</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inscription</title>
-        <style>
-            .bon{
-                background: #f3eff2;
-                border: 0;
-                border-radius: 26px;
-                color: rgb(14, 15, 15);
-            }
-            .box input[type= "text"],.box input[type= "password"]{
-                border: 0;
-                display : block;
-                background : none;
-                margin : 10px auto;
-                border: 2px solid #3498db;
-                padding: 14px 10px;
-                outline: none;
-                color: red;
-                border-radius: 24px;
-                transition: 0.25s;
-                cursor: pointer;
-            }
-            .box input[type= "text"]:focus,.box input[type= "password"]:focus{
-                width: 280px;
-                border-color: #2ecc71;
-            }
-            .box input[type= "submit"]{
-                border: 0;
-                display : block;
-                background : none;
-                margin : 9px auto;
-                border: 2px solid #2ecc71;
-                padding: 14px 20px;
-                outline: none;
-                color: red;
-                border-radius: 24px;
-                transition: 0.25s;
-                cursor: pointer;
-            }
-            .box input[type= "submit"]:hover{
-                background : #6276e9;
-            }
-        </style>
-    </head>
-    </head>
-    <body>
-        {% extends "base.html" %}
-        {% block title %}Mon Examen{% endblock %}
-        {%block content%}
-        <b><p>La première plateforme de cours en Guinée.</p></b>
-        <b><p>Votre réussite c'est juste devant vous.</p></b>
-        <h1>Inscrivez-vous pour continuer.</h1>
-        <form class="box" method="POST" action="/register">
-            <div class="bon">
-                <label for="first_name">Prénom* :</label><br>
-                <input type="text"name="first_name"id="first_name" placeholder="Prénom" required><br>
-                <label for="last_name">Nom de famille* :</label><br>
-                <input type="text"name="last_name"id="last_name" placeholder="Nom de famille" required><br>
-                <label for="username">Nom d'utilisateur* :</label><br>
-                <input type="text" name="username" id="username" placeholder=" Nom d'utilisateur"  required><br>
-                <label for="password">Mot de passe* :</label><br>
-                <input type="password" name="password" id="password" placeholder="Mot de passe" required><br><br>
-                <input type="submit" value="S'inscrire">
+<head>
+    <title>Inscription</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            text-align: center;
+        }
+        .bon {
+            background: #0001;
+            border: 0;
+            border-radius: 26px;
+            color: rgb(14, 15, 15);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .box input[type="text"],
+        .box input[type="password"] {
+            border: 0;
+            display: block;
+            background: none;
+            margin: 10px auto;
+            border: 2px solid #3498db;
+            padding: 14px 10px;
+            outline: none;
+            color: #343a40;
+            border-radius: 24px;
+            transition: 0.25s;
+            cursor: pointer;
+            width: calc(100% - 30px);
+        }
+        .box input[type="text"]:focus,
+        .box input[type="password"]:focus {
+            width: calc(100% - 30px);
+            border-color: #2ecc71;
+        }
+        .box input[type="submit"] {
+            border: 0;
+            display: block;
+            background: none;
+            margin: 9px auto;
+            border: 2px solid #2ecc71;
+            padding: 14px 20px;
+            outline: none;
+            color: #fff;
+            border-radius: 24px;
+            transition: 0.25s;
+            cursor: pointer;
+            background-color: #2ecc71;
+        }
+        .box input[type="submit"]:hover {
+            background: #6276e9;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+        .message {
+            font-size: 0.9rem;
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block title %}MExamen{% endblock %}
+    {% block content %}
+    <h5>Inscrivez-vous pour continuer.</h5>
+    <form class="box" method="POST" action="/register">
+        <div class="bon">
+            <label for="first_name">Prénom* :</label><br>
+            <input type="text" name="first_name" id="first_name" placeholder="Prénom" required><br>
+            <label for="last_name">Nom de famille* :</label><br>
+            <input type="text" name="last_name" id="last_name" placeholder="Nom de famille" required><br>
+            <label for="username">Nom d'utilisateur* :</label><br>
+            <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" required>
+            <p id="username-message" class="message"></p>
+            <label for="password">Mot de passe* :</label><br>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <button type="button" id="togglePassword" style="background: none; border: none; color: #3498db; cursor: pointer;">Afficher</button><br><br>
+            <div class="checkbox-container">
+                <input type="checkbox" id="accept_terms" required>
+                <label for="accept_terms">J'accepte les <a href="/terms">conditions d'utilisation</a></label>
             </div>
-        </form>
-        <p>Merci! De nous faire Confiance.</p>
-        {% endblock %}
-    </body>
-</html>
+            <input type="submit" value="S'inscrire">
+        </div>
+    </form>
+    <p>Merci! De nous faire Confiance.</p>
 
+    <script>
+        document.getElementById('username').addEventListener('input', function() {
+            const username = this.value;
+            const messageElement = document.getElementById('username-message');
+            // Simule une vérification de disponibilité
+            if (username === 'existant') {
+                messageElement.textContent = 'Ce nom d\'utilisateur est déjà pris.';
+                messageElement.style.color = 'red';
+            } else {
+                messageElement.textContent = 'Nom d\'utilisateur disponible.';
+                messageElement.style.color = 'green';
+            }
+        });
+
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.textContent = type === 'password' ? 'Afficher' : 'Masquer';
+        });
+    </script>
+    {% endblock %}
+</body>
+</html>

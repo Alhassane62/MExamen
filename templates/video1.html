@@ -1,34 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physique</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .video-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .video-description {
+            color: #555;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .cta {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .cta:hover {
+            background-color: #218838;
+        }
+        .contact-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .contact-info i {
+            color: #007bff;
+        }
+        .contact-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .social-share {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-share a {
+            margin: 0 10px;
+            color: #007bff;
+            font-size: 20px;
+        }
+        .testimonials, .faq {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .testimonials h4, .faq h4 {
+            text-align: center;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     {% extends "base.html" %}
     {% block title %}Mon Examen{% endblock %}
-    {%block content%}
-    <a href="/profile" ><i class="fas fa-user"></i> Mon compte</a>
-    <b><p>La première plateforme de cours en Guinée.</p></b>
-    <b><p>Votre réussite c'est juste devant vous.</p></b>
-    <h3>Titre de la vidéo</h3>
-<div style ="display:flex; flex-direction: column; justify-content: center">
-    <video width="100%" height="100%" controls="controls"  controlsList="nodownload"  preload="auto" >
-        <source src="{{ url_for('static', filename='video_test.mp4')}}" type="video/mp4">
-    </video>
-    <h3>Titre de la vidéo</h3>
-    <video width="100%" height="100%" controls="controls" controlsList="nodownload" preload="auto" >
-        <source src="{{ url_for('static', filename='video2.mp4')}}" type="video/mp4">
-    </video>
-    <h3>Titre de la vidéo</h3>
-    <video width="100%" height="100%" controls="controls"  controlsList="nodownload"  preload="auto" >
-        <source src="{{ url_for('static', filename='video4.mp4')}}" type="video/mp4">
-    </video>
-</div>
-<p> Pour toutes question liée aux cours contactez : <i class="fas fa-phone"></i> <a href="tel:+224624366064">+224624366064</a></p>
+    {% block content %}
+
+    <!-- Barre de navigation -->
+    <div class="navbar">
+        <a href="/profile"><i class="fas fa-user"></i> Mon compte</a>
+        <a href="/cours">Cours</a>
+        <a href="/physique">Physique</a>
+        <a href="/autres-cours">Autres Cours</a>
+    </div>
+
+        <!-- Table des matières -->
+        <h2>Table des matières</h2>
+        <ul>
+            <li><a href="#video1">Vidéo 1 : Principes fondamentaux</a></li>
+            <li><a href="#video2">Vidéo 2 : Lois du mouvement</a></li>
+            <li><a href="#video3">Vidéo 3 : Énergie et travail</a></li>
+        </ul>
+
+        <!-- Section des vidéos -->
+        <div class="video-section">
+            <h3 id="video1">Titre de la vidéo 1</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video_test.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Cette vidéo couvre les principes fondamentaux de la physique.</p>
+
+            <h3 id="video2">Titre de la vidéo 2</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video2.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Découvrez les lois du mouvement de Newton.</p>
+
+            <h3 id="video3">Titre de la vidéo 3</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video4.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Apprenez les concepts d'énergie et de travail.</p>
+        </div>
+
+        <!-- Bouton d'appel à l'action -->
+        <a href="/cours" class="cta">Voir plus de cours</a>
+
+        <!-- Témoignages -->
+        <div class="testimonials">
+            <h4>Témoignages d'étudiants</h4>
+            <p>"Cette plateforme m'a aidé à comprendre la physique comme jamais auparavant!" - Étudiant A</p>
+            <p>"Les vidéos sont claires et faciles à suivre!" - Étudiant B</p>
+        </div>
+
+        <!-- Informations de contact -->
+        <div class="contact-info">
+            <p>Pour toute question liée aux cours, contactez-nous :</p>
+            <p><i class="fas fa-phone"></i> <a href="tel:+224624366064">+224 624 36 60 64</a></p>
+        </div>
+
+        <!-- Section de partage social -->
+        <div class="social-share">
+            <p>Partagez cette page :</p>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-facebook"></a>
+            <a href="https://twitter.com/intent/tweet?url={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-twitter"></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-linkedin"></a>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq">
+            <h4>Questions Fréquemment Posées (FAQ)</h4>
+            <p><strong>Q : Comment m'inscrire à un cours ?</strong><br>A : Vous pouvez vous inscrire en cliquant sur le bouton "Voir plus de cours".</p>
+            <p><strong>Q : Que faire si j'ai des problèmes techniques ?</strong><br>A : Contactez notre support technique au +224 624 36 60 64.</p>
+        </div>
+    </div>
+
+    {% endblock %}
 </body>
-{% endblock %}
 </html>

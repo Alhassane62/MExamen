@@ -1,40 +1,75 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
+    <meta http-equiv="refresh" content="2;url=/aceuill"> <!-- Meta refresh -->
     <style>
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
+            flex-direction: column; /* Pour centrer verticalement */
             justify-content: center;
             align-items: center;
-            background-color: #0f0f0; 
+            background: linear-gradient(135deg, #f0f0f0 0%, #d9d9d9 100%); /* Dégradé de fond */
+            color: #333; /* Couleur du texte */
+            text-align: center; /* Centrer le texte */
+            font-family: Arial, sans-serif; /* Typographie */
+        }
+        .logo-container {
+            width: 220px; /* Largeur du cercle */
+            height: 220px; /* Hauteur du cercle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Cercle parfait */
+            border: 10px solid #231e88; /* Bordure du cercle */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Ombre portée pour le cercle */
+            margin-bottom: 20px; /* Espacement sous le logo */
+            background: white; /* Fond blanc à l'intérieur du cercle */
         }
         .logo {
-            width: 200px;
+            width: 80%; /* Ajuster la taille du logo à l'intérieur du cercle */
             height: auto; 
+            animation: bounce 1.5s infinite; /* Animation du logo */
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        h2 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold; /* Mettre le texte en gras */
+        }
+        h3 {
+            margin: 10px 0 20px 0; /* Espacement autour du message */
+            font-size: 1.2em; 
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    <!-- Contenu de la page de chargement -->
-    <h2 class="animate__animated animate__bounce"></h2>
-    <h3 class="animate__animated animate__bounce animate__delay-2s"></h3>
+    <h2 class="animate__animated animate__bounce" aria-live="polite" role="status">Chargement en cours...</h2>
+    <h3 class="animate__animated animate__fadeIn animate__delay-1s">Veuillez patienter</h3>
 
+    <div class="logo-container">
+        <img src="{{url_for('logo')}}" alt="Logo de Mon Examen" class="logo" aria-hidden="true">
+    </div>
 
-    <!-- Optionnel : Ajoutez une animation ou une image de chargement -->
-    <img src="{{url_for('logo')}}" alt="Mon Examen" height="40" type="image/png" class="logo">
-    <!-- Message indiquant que l'application est en cours de chargement -->
-    <!-- Script pour rediriger vers la page d'accueil après 2 secondes -->
     <script>
         setTimeout(function() {
             window.location.href = "/aceuill";
-        }, 1000);
+        }, 2000); // Temps ajusté à 2000 ms
     </script>
 </body>
 </html>

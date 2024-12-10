@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note L'application</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f9f9f9; /* Ajout d'une couleur de fond */
         }
 
         #rating-section {
@@ -17,6 +18,10 @@
             width: 80%;
             max-width: 600px;
             text-align: center;
+            background: white; /* Ajout d'un fond blanc */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre autour du formulaire */
         }
 
         #rating-form {
@@ -27,6 +32,7 @@
 
         #rating-form label {
             margin-bottom: 10px;
+            font-weight: bold; /* Gras pour les labels */
         }
 
         #rating-form .rating-stars {
@@ -37,6 +43,7 @@
             font-size: 36px;
             color: #ccc;
             cursor: pointer;
+            margin: 0 5px; /* Espace entre les étoiles */
         }
 
         #rating-form .rating-star:hover,
@@ -56,30 +63,38 @@
         #rating-form button:hover {
             background-color: #45a049;
         }
+        
+        /* Style pour le message de confirmation */
+        #confirmation-message {
+            margin-top: 20px;
+            color: #4CAF50; /* Couleur verte pour le message */
+            display: none; /* Cacher par défaut */
+        }
     </style>
 </head>
 <body>
     <section id="rating-section">
         <h3>Noter l'application</h3>
-        <form id="rating-form" action="/sbmit_rating" method="post">
+        <form id="rating-form" action="/submit_rating" method="post" onsubmit="return validateForm()">
             <label for="rating">Votre Note :</label>
-            <div class="rating-stars">
-                <span class="rating-star" data-value="1">&#9733;</span>
-                <span class="rating-star" data-value="2">&#9733;</span>
-                <span class="rating-star" data-value="3">&#9733;</span>
-                <span class="rating-star" data-value="4">&#9733;</span>
-                <span class="rating-star" data-value="5">&#9733;</span>
+            <div class="rating-stars" aria-label="Évaluez l'application">
+                <span class="rating-star" data-value="1" aria-label="1 étoile">&#9733;</span>
+                <span class="rating-star" data-value="2" aria-label="2 étoiles">&#9733;</span>
+                <span class="rating-star" data-value="3" aria-label="3 étoiles">&#9733;</span>
+                <span class="rating-star" data-value="4" aria-label="4 étoiles">&#9733;</span>
+                <span class="rating-star" data-value="5" aria-label="5 étoiles">&#9733;</span>
             </div>
             <input type="hidden" id="rating" name="rating" value="0">
             <label for="comment">Commentaire :</label>
             <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
-            <button type="submit">Somettre</button>
+            <button type="submit">Soumettre</button>
         </form>
+        <div id="confirmation-message">Merci pour votre évaluation !</div>
     </section>
     <script>
-     const stars = document.querySelectorAll('.rating-star');
+        const stars = document.querySelectorAll('.rating-star');
 
-     stars.forEach(star => {
+        stars.forEach(star => {
             star.addEventListener('click', () => {
                 const value = parseInt(star.getAttribute('data-value'));
                 document.getElementById('rating').value = value;
@@ -93,6 +108,16 @@
                 });
             });
         });
+
+        function validateForm() {
+            const ratingValue = document.getElementById('rating').value;
+            if (ratingValue == "0") {
+                alert("Veuillez sélectionner une note avant de soumettre.");
+                return false; // Empêche la soumission du formulaire
+            }
+            document.getElementById('confirmation-message').style.display = 'block'; // Affiche le message de confirmation
+            return true; // Permet la soumission du formulaire
+        }
     </script>
 
 </body>

@@ -14,7 +14,7 @@
             color: #343a40;
         }
         .navbar {
-            background-color: #78b0f0;
+            background-color: #a7bfd8;
         }
         .navbar-brand {
             display: flex;
@@ -26,8 +26,8 @@
         .navbar-brand img {
             margin-right: 10px;
             border-radius: 50%;
-            border: 2px solid #ffc107;
-            padding: 5px;
+            border: 2px solid #007bff;
+            padding: px;
         }
         .navbar-brand:hover {
             color: #ffc107;
@@ -58,8 +58,8 @@
             background-color: rgba(255, 193, 7, 0.2);
         }
         .app-title {
-            color: #ffc107;
-            margin-left: 10px;
+            color: #007bff;
+            margin-left: 3px;
         }
         .main-content {
             padding: 50px 0;
@@ -85,6 +85,27 @@
         .btn-outline-success:hover {
             background-color: #ffc107;
             color: #343a40;
+        }
+        .testimonials, .faq {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .social-media {
+            display: flex;
+            justify-content: center; /* Centre les icônes */
+            margin-top: 10px;
+        }
+        .social-media a {
+            font-size: 1.5rem; /* Taille des icônes */
+            color: #ffc107; /* Couleur des icônes */
+            transition: color 0.3s ease;
+            margin: 0 10px; /* Espacement entre les icônes */
+        }
+        .social-media a:hover {
+            color: #fff; /* Couleur au survol */
         }
     </style>
 </head>
@@ -132,25 +153,57 @@
     </header>
     <main class="main-content">
         <div class="container text-center">
-            <h2>Bienvenue! Sur Votre Plateforme de cours</h2>
+            <h2>Bienvenue ! Sur Votre Plateforme de cours</h2>
             {% block content %}{% endblock %}
             <a class="btn btn-outline-primary mt-4" href="/document">
                 <i class="fas fa-info"></i> A PROPOS DE NOUS
             </a>
+
+            <!-- Section Témoignages -->
+            <div class="testimonials">
+                <h3>Témoignages</h3>
+                <p>"Cette plateforme m'a aidé à réussir mon examen avec brio!" - Étudiant 1</p>
+                <p>"Des cours de qualité et des professeurs exceptionnels!" - Étudiant 2</p>
+            </div>
+
+            <!-- Section FAQ -->
+            <div class="faq">
+                <h3>Questions Fréquemment Posées</h3>
+                <p><strong>Q : Comment puis-je m'inscrire?</strong></p>
+                <p>R : Vous pouvez vous inscrire en cliquant sur le lien d'inscription dans la barre de navigation.</p>
+                <p><strong>Q : Quels types de cours proposez-vous?</strong></p>
+                <p>R : Nous proposons une variété de cours dans différents domaines, allant de la physique à la programmation.</p>
+            </div>
         </div>
     </main>
     <footer class="footer">
-        <p>&copy; 2024 Application Cours. Tous droits réservés. Mon Examen.</p>
-        <p>République De Guinée</p>
-        <p>Application de cours avec nos Professeurs connus et reconnus</p>
-        <p>Contactez-nous :</p>
-        <p>Téléphone : <a href="tel:+224624366064"><i class="fas fa-phone"></i> 624366064</a></p>
-        <p>E-mail : <a href="mailto:alhassangsdiallo@gmail.com"><i class="fas fa-envelope"></i> alhassangsdiallo@gmail.com</a></p>
-        <p>WhatsApp : <a href="https://wa.me/224624366064?text=Bonjour%20!"><i class="fab fa-whatsapp"></i> 624366064</a></p>
-        <p>&copy; 2024 - MExamen Created By AGS-Tech Sarl 1.1-vr</p>
+        <div class="container">
+            <p>&copy; 2024 Plateforme de Cours. Tous droits réservés. MExamen.</p>
+            <p>République De Guinée</p>
+        </div>
+
+        <!-- Section Réseaux Sociaux -->
+        <div class="container mt-3">
+            <h5>Suivez-nous :</h5>
+            <div class="social-media">
+                <a href="https://facebook.com/yourprofile" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/yourprofile" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/yourprofile" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" class="text-decoration-none">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        <p>&copy; 2024 - MExamen Created By AGS-Technologie Sarl 1.1-vr</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

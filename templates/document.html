@@ -4,80 +4,94 @@
     <meta charset="UTF-8">
     <title>Information</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{
+        body {
             color: rgb(198, 170, 170);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        footer{
+        footer {
             color: #fff;
-            padding: 9px;
+            padding: 20px;
             background-color: black;
+            text-align: center;
         }
-        .co{
+        .co, .ap, .la {
             padding: 24px;
-            background: #db7005;
-            border: 0;
             border-radius: 24px;
+            margin-bottom: 10px;
+            list-style: none;
         }
-        .co :hover{
+        .co {
+            background: #db7005;
+        }
+        .co:hover {
             background: #54db05;
             color: #872727;
-            border-radius: 24px;
         }
-        .ap{
-            padding: 24px;
+        .ap {
             background: #881e22;
-            border: 0;
-            border-radius: 24px;
         }
-        .ap:hover{
+        .ap:hover {
             background: #db0505;
             color: #7d6d6d;
-            border-radius: 24px;
         }
-        .la{
-            padding: 24px;
+        .la {
             background: #ced508;
-            border: 0;
-            border-radius: 24px; 
         }
-        .la:hover{
+        .la:hover {
             background: #3005db;
             color: #7d6d6d;
-            border-radius: 24px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit; /* Utilise la couleur d'arrière-plan du lien */
+        }
+        a:hover {
+            color: #ffc107; /* Couleur d'un lien au survol */
+        }
+        .content {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
         }
     </style>
 </head>
 <body>
     {% extends "base.html" %}
-    {% block title %}Mon Examen{% endblock %}
-    {%block content%}
-    <ul class="ap">
-        <li>
-            <a href="{{url_for('info')}}"><i class="fas fa-info"></i> Qui Sommes-Nous ? </a>
-        </li>
-    </ul>
-    <ul class="co">
-        <li>
-            <a href="{{url_for('contact')}}"><i class="fas fa-headset"></i> Service Client </a>
-        </li>
-     </ul>
-    <ul class="la">
-        <li>
-            <a href="{{url_for('about')}}"><i class="fas fa-star"></i>Laissez votre avis</a>
-        </li>
-    </ul>
+    {% block title %}MExamen{% endblock %}
+    {% block content %}
+    <div class="content">
+        <ul class="ap">
+            <li>
+                <a href="{{url_for('info')}}"><i class="fas fa-info" aria-hidden="true"></i> Qui Sommes-Nous ?</a>
+            </li>
+        </ul>
+        <ul class="co">
+            <li>
+                <a href="{{url_for('contact')}}"><i class="fas fa-headset" aria-hidden="true"></i> Service Client</a>
+            </li>
+        </ul>
+        <ul class="la">
+            <li>
+                <a href="{{url_for('about')}}"><i class="fas fa-star" aria-hidden="true"></i> Laissez votre avis</a>
+            </li>
+        </ul>
+    </div>
     {% endblock %}
     <footer>
-        <p>&copy; 2024 Application Cours. Tous droits réservés.&copysr; Mon Examen </p>
-        <li>République De Guinée</li>
-        <p>Application de cours </p>
-        <p>Avec nos Proffesseurs connu et reconnu</p>
-        <p>Contactez-nous :</p>
-        <p> Téléphone : <a href="tel:+224624366064"> <i class="fas fa-phone"></i> +224624366064 </a> </p>
-        <p>E-mail : <a href="mailto:alhassangsdiallo@gmail.com"><i class="fas fa-envelope"></i> alhassangsdiallo@gmail.com</a></p>
-        <p>WhatsApp :<a href="https://wa.me/224624366064?text=Bonjour%20!"><i class="fab fa-whatsapp"></i> +224624366064</a> </p>
-        <p>&copy; 2024 By AGS-Tech Sarl 1.1-vr</p>
+        <div class="container">
+            <p>&copy; 2024 Application Cours. Tous droits réservés. Mon Examen</p>
+            <p>République De Guinée</p>
+            <p>Application de cours avec nos professeurs connus et reconnus</p>
+            <p>Contactez-nous :</p>
+            <p>Téléphone : <a href="tel:+224624366064"><i class="fas fa-phone"></i> +224624366064</a></p>
+            <p>E-mail : <a href="mailto:alhassangsdiallo@gmail.com"><i class="fas fa-envelope"></i> alhassangsdiallo@gmail.com</a></p>
+            <p>WhatsApp : <a href="https://wa.me/224624366064?text=Bonjour%20!"><i class="fab fa-whatsapp"></i> +224624366064</a></p>
+            <p>&copy; 2024 By AGS-Tech Sarl 1.1-vr</p>
+        </div>
     </footer>
 </body>
-</html> 
+</html>

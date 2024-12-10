@@ -1,22 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for, session,g ,send_file
+from flask import Flask, render_template, request, redirect, url_for, session, g, send_file
+from datetime import datetime, timedelta
 import random
 import string
 import hashlib
 import sqlite3
 
-
-print("\t____Bienvenue!___")
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'your_secret_key_here' 
-app.static_folder =r'C:\Users\ALHASSANE DIALLO\GS\project\sources\videos'
-#app.static_folder =r'C:\Users\ALHASSANE DIALLO\GS\project\sources\images'
- 
+app.static_folder = r'C:\Users\ALHASSANE DIALLO\GS\project\sources\videos'
+
 DATABASE = 'database.db'
+
 def get_db():
-    db = getattr(g,'_database',None)
+    db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
     return db 
+
 def create_tables():
     with app.app_context():
         db = get_db()
@@ -28,7 +28,8 @@ def create_tables():
                 user_id INTEGER,
                 password TEXT,
                 first_name TEXT,
-                last_name TEXT
+                last_name TEXT,
+                trial_start_date DATE
             )
         ''')
         cursor.execute('''
@@ -41,32 +42,72 @@ def create_tables():
             )
         ''')
         db.commit()      
+
 create_tables()
+
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g,'_database',None)
+    db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
-def add_user(username,password,first_name,last_name):
+def add_user(username, password, first_name, last_name):
     cursor = get_db().cursor()
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     try:
-        cursor.execute('INSERT INTO users (username,password,first_name,last_name) VALUES(?,?,?,?)',(username,hashed_password,first_name,last_name))
+        cursor.execute('INSERT INTO users (username, password, first_name, last_name) VALUES (?, ?, ?, ?)', 
+                       (username, hashed_password, first_name, last_name))
         user_id = cursor.lastrowid  
         get_db().commit()
         return user_id
     except sqlite3.IntegrityError:
         return None
-      
 
-def authenticate_user(username,password):
+def authenticate_user(username, password):
     cursor = get_db().cursor()
-    cursor.execute('SELECT*FROM users WHERE username =? AND password=?',(username,hashlib.sha256(password.encode()).hexdigest()))
+    cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', 
+                   (username, hashlib.sha256(password.encode()).hexdigest()))
     user = cursor.fetchone()
-    if user and user[3]==hashlib.sha256(password.encode()).hexdigest():
-        return user
-    return None
+    return user
+
+def is_subscription_valid(user_id):
+    cursor = get_db().cursor()
+    cursor.execute('SELECT trial_start_date FROM users WHERE id = ?', (user_id,))
+    result = cursor.fetchone()
+    if result:
+        trial_start_date = result[0]
+        if trial_start_date:
+            trial_end_date = datetime.strptime(trial_start_date, '%Y-%m-%d') + timedelta(days=30)
+            return datetime.now() < trial_end_date
+    return True
+
+
+def get_user_id_by_username(username):
+    cursor = get_db().cursor()
+    cursor.execute('SELECT id FROM users WHERE username = ?', (username,))
+    user = cursor.fetchone()
+    return user[0] if user else None
+
+
+@app.route('/subscribe', methods=['POST', 'GET'])
+def subscribe():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+
+    user_id = get_user_id_by_username(session['username'])
+
+    if request.method == 'POST':
+        now = datetime.now()
+        cursor = get_db().cursor()
+        cursor.execute('UPDATE users SET trial_start_date = ? WHERE id = ?', (now.strftime('%Y-%m-%d'), user_id))
+        get_db().commit()
+        return redirect(url_for('success_subscription'))
+
+    return render_template('subscribe.html')  
+
+@app.route('/success_subscription')
+def success_subscription():
+    return render_template('success_subscription.html')  
 
 class User:
     def __init__(self, username, password, first_name, last_name):
@@ -78,18 +119,20 @@ class User:
 
     def generate_id(self):
         return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
     @staticmethod
     def authenticate(username, password):
         cursor = get_db().cursor()
-        cursor.execute('SELECT*FROM users WHERE username =? AND password=?',(username,hashlib.sha256(password.encode()).hexdigest()))
+        cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', 
+                       (username, hashlib.sha256(password.encode()).hexdigest()))
         user = cursor.fetchone()
         return user
-   
+
 @app.route('/aceuill')
 def index():
     return render_template('aceuill.html')
 
-@app.route('/index', methods=['POST','GET'])
+@app.route('/index', methods=['POST', 'GET'])
 def index_form():
     if request.method == 'POST':
         username = request.form.get('username', '')
@@ -97,16 +140,16 @@ def index_form():
         if username and password:
             user = authenticate_user(username, password)
             if user:
-                session['username']=username
+                session['username'] = username
                 return redirect(url_for('cours'))
             else:
                 return 'Nom d\'utilisateur ou mot de passe incorrect.'
         else:
-            return 'Veuillez remplir tous les champs de conexion.'
+            return 'Veuillez remplir tous les champs de connexion.'
     else:
         return render_template('index.html')
 
-@app.route('/register', methods=['POST','GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
         first_name = request.form.get('first_name', '')
@@ -115,37 +158,20 @@ def register():
         password = request.form.get('password', '')
 
         if first_name and last_name and username and password:
-            #if any(user.username == username for user in User):
-                #return 'Nom d\'utilisareur dèja utilisé.'
-            #else:
-            #try :
-            user_id = add_user(username,password,first_name,last_name)
+            user_id = add_user(username, password, first_name, last_name)
             if user_id is not None:
-                session['username']= username
-                #cursor = get_db().cursor()
-                #cursor.execute('SELECT*FROM users WHERE username =?',(username,))
-                #existing_user = cursor.fetchone()
-                #if existing_user:
-                    #return 'Nom d\'utilisateur déjà utlisé.'
-                #add_user(username,password,first_name,last_name)
-                #cursor.execute('SELECT*FROM users WHERE username =?',(username,))
-                #user_record = cursor.fetchone()
-                #if user_record :
-                    #user_id = user_record[0]
-                    #session['username']=username
-                return redirect(url_for('success', user_id=user_id,first_name=first_name))
+                session['username'] = username
+                return redirect(url_for('success', user_id=user_id, first_name=first_name, last_name=last_name))
             else:
-                return 'Nom d\'utilisateur déjà utlisé.'
-                    #return 'Erreur lors de l\'enregistrement de l\'ID. '
-            #except Exception as e :
-                #return 'Erreur lors de l\'enregistrement {}'.format(e)
+                return 'Nom d\'utilisateur déjà utilisé.'
         else:
             return 'Veuillez remplir tous les champs.'
     else:
         return render_template('register.html')
-@app.route('/success/<int:user_id>/<first_name>')
-def success(user_id,first_name):
-    return render_template('success.html',user_id=user_id, first_name=first_name)
+
+@app.route('/success/<int:user_id>/<first_name>/<last_name>')
+def success(user_id, first_name, last_name):
+    return render_template('success.html', user_id=user_id, first_name=first_name, last_name=last_name)
 
 @app.route('/')
 def charg():
@@ -159,13 +185,12 @@ class Paiements:
 
     def process_payment(self):
         return "Paiement traité avec succès."
- 
 
 @app.route('/process_payment', methods=['POST'])
 def process_payment():
     if 'username' not in session:
         return redirect(url_for('index'))
-    
+
     user_id = request.form.get('user_id', '')
     amount = request.form.get('amount', '')
     payment_method = request.form.get('payment_method', '')
@@ -173,7 +198,7 @@ def process_payment():
     if user_id and amount and payment_method:
         payment = Paiements(user_id, amount, payment_method)
         result = payment.process_payment()
-        save_payment_details(user_id,amount,payment_method)
+        save_payment_details(user_id, amount, payment_method)
         return result
     else:
         return 'Veuillez remplir tous les champs de paiements.'
@@ -182,43 +207,77 @@ class Cours:
     def __init__(self, title, description):
         self.title = title
         self.description = description
-     
-
+    
 class PDF(Cours):
     def __init__(self, title, description, author, pub_date):
         super().__init__(title, description)
         self.author = author
         self.pub_date = pub_date
 
-
 @app.route('/cours')
 def cours():
+    if 'username' not in session:
+        return redirect(url_for('index'))  # Redirigez si l'utilisateur n'est pas connecté
+
+    user_id = get_user_id_by_username(session['username'])
+    
+    # Vérifiez si l'utilisateur a un abonnement valide
+    if not is_subscription_valid(user_id):
+        return redirect(url_for('subscribe'))  # Redirigez vers la page d'abonnement
+
     cours1 = [
         PDF('Mathématiques', 'Ce cours vous apprend le Programme de Mathématiques Terminale SM & SE', 'Dr. Hassan Gs', '2024-12-15',)
     ]
     cours2 = [
-        PDF('Pysique', 'Ce cours vous apprend le Programme de physique Terminale SM & SE', 'Pr. Diallo Gs', '2024-02-21',)
+        PDF('Physique', 'Ce cours vous apprend le Programme de physique Terminale SM & SE', 'Pr. Diallo Gs', '2024-02-21',)
     ]
     return render_template('liste.html', cours1=cours1 , cours2=cours2)
 
+
 @app.route('/video1')
 def video1():
-    #video_path = r"C:\Users\ALHASSANE DIALLO\GS\project\sources\videos\video_test.mp4"
     return render_template('video.html')
 
 @app.route('/video2')
 def video2():
-    #video_path = r"C:\Users\ALHASSANE DIALLO\GS\project\sources\videos\video_test.mp4"
     return render_template('video1.html')
-
 
 @app.route('/pdf')
 def pdf():
     pdf_path = r"C:\Users\ALHASSANE DIALLO\GS\project\sources\pdf\cours_html.pdf"
-    return send_file(pdf_path,as_attachment=False)
+    return send_file(pdf_path, as_attachment=False)
+
 @app.route('/logo')
 def logo():
     return send_file(r'C:\Users\ALHASSANE DIALLO\GS\project\sources\images\logo.png', mimetype='image/png')
+
+@app.route('/odc')
+def odc():
+    return send_file(r'C:\Users\ALHASSANE DIALLO\GS\project\sources\images\odc.png', mimetype='image/png')
+
+@app.route('/me1')
+def me1():
+    return send_file(r'C:\Users\ALHASSANE DIALLO\GS\project\sources\images\me1.png', mimetype='image/png')
+
+@app.route('/me2')
+def me2():
+    return send_file(r'C:\Users\ALHASSANE DIALLO\GS\project\sources\images\me2.png', mimetype='image/png')
+
+@app.route('/document')
+def document():
+    return render_template('document.html')
+
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/profile')
 def profile():
@@ -228,51 +287,16 @@ def profile():
         cursor.execute('SELECT * FROM users WHERE username =?',(username,))
         user = cursor.fetchone()
         if user:
-            return render_template('profile.html',user=user)
+            return render_template('profile.html', user=user)
         else:
-            return 'Utilisateur non trouvé.'
+            return 'Utilisateur non trouver'
     else:
         return redirect(url_for('register'))
-@app.route('/document')
-def document():
-    return render_template('document.html')
-@app.route('/info')
-def info():
-    return render_template('info.html')
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-@app.route('/about')
-def about():
-    return render_template('about.html')
-@app.route('/search', methods=['POST'])
-def search():
-    if 'username' not in session:
-        return redirect(url_for('index'))
-    search_query = request.form.get('search_query')
-    if search_query == 'cours':
-        return render_template('liste.html')
-    elif search_query == 'profile':
-        return render_template('profile.html')
-    else:
-        return render_template('not.html')
-
+    
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
-@app.route('/edit_profile', methods= ['POST', 'GET'])
-def edit_profile():
-    if 'username' not in session:
-        return redirect(url_for('register'))
-    username = session['username']
-    cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM users')
-    user = cursor.fetchone()
-    if request.method == 'POST':
-        new_email = request.form['email']
-        nex_password = request.form['password']
-        return redirect(url_for('profile'))
-    return render_template('edit_profile.html', username=username)
+
 if __name__ == '__main__':
     app.run(debug=True)

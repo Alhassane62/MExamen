@@ -1,35 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
+    <title>Vidéo</title>
     <style>
-        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .video-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .video-section h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .video-description {
+            color: #555;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        .cta {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .cta:hover {
+            background-color: #218838;
+        }
+        .contact-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .contact-info i {
+            color: #007bff;
+        }
+        .contact-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .social-share {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-share a {
+            margin: 0 10px;
+            color: #007bff;
+            font-size: 20px;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     {% extends "base.html" %}
-    {% block title %}Mon Examen{% endblock %}
-    {%block content%}
-    <a href="/profile" ><i class="fas fa-user"></i> Mon compte</a>
-    <b><p>La première plateforme de cours en Guinée.</p></b>
-    <b><p>Votre réussite c'est juste devant vous.</p></b>
-    <h3>Titre de la vidéo</h3>
-<div style ="display:flex; flex-direction: column; justify-content: center">
-    <video width="100%" height="100%" controls="controls"  controlsList="nodownload"  preload="auto" >
-        <source src="{{ url_for('static', filename='video_test.mp4')}}" type="video/mp4">
-    </video>
-    <h3>Titre de la vidéo</h3>
-    <video width="100%" height="100%" controls="controls" controlsList="nodownload" preload="auto" >
-        <source src="{{ url_for('static', filename='video2.mp4')}}" type="video/mp4">
-    </video>
-    <h3>Titre de la vidéo</h3>
-    <video width="100%" height="100%" controls="controls"  controlsList="nodownload"  preload="auto" >
-        <source src="{{ url_for('static', filename='video3.mp4')}}" type="video/mp4">
-    </video>
-</div>
-<p> Pour toutes question liée aux cours contactez : <i class="fas fa-phone"></i> <a href="tel:+224624366064">+224624366064</a></p>
+    {% block title %}MExamen{% endblock %}
+    {% block content %}
+    
+        <!-- Section des vidéos -->
+        <div class="video-section">
+            <h3>Titre de la vidéo 1</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video_test.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Cette vidéo vous guide à travers les bases de notre plateforme.</p>
+
+            <h3>Titre de la vidéo 2</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video2.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Découvrez les fonctionnalités avancées de nos cours en ligne.</p>
+
+            <h3>Titre de la vidéo 3</h3>
+            <video controls="controls" controlsList="nodownload" preload="auto">
+                <source src="{{ url_for('static', filename='video3.mp4')}}" type="video/mp4">
+            </video>
+            <p class="video-description">Témoignages de nos étudiants qui ont réussi grâce à notre plateforme.</p>
+        </div>
+
+        <!-- Bouton d'appel à l'action -->
+        <a href="/cours" class="cta">Voir plus de cours</a>
+
+        <!-- Informations de contact -->
+        <div class="contact-info">
+            <p>Pour toute question liée aux cours, contactez-nous :</p>
+            <p><i class="fas fa-phone"></i> <a href="tel:+224624366064">+224 624 36 60 64</a></p>
+        </div>
+
+        <!-- Section de partage social -->
+        <div class="social-share">
+            <p>Partagez cette page :</p>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-facebook"></a>
+            <a href="https://twitter.com/intent/tweet?url={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-twitter"></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ url_for('static', filename='video_test.mp4') }}" target="_blank" class="fab fa-linkedin"></a>
+        </div>
+    </div>
+
+    {% endblock %}
 </body>
-{% endblock %}
 </html>

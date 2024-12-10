@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>A propos</title>
+    <title>À Propos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .inf{
-            background: #231e88;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f8ff; /* Couleur de fond douce */
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .inf {
+            background: #4a90e2; /* Bleu apaisant */
             border: 0;
-            border-radius: 24px;
-            color: aliceblue;
+            border-radius: 18px;
+            color: white;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            color: #2c3e50; /* Couleur du texte du titre */
+        }
+        p {
+            margin: 10px 0;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #34495e; /* Couleur pour le footer */
+        }
+        a {
+            color: #e67e22; /* Couleur orange pour les liens */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #d35400; /* Couleur orange plus foncé au survol */
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>À Propos de Mon Examen</h1>
+    </header>
     <div class="inf">
-        <p>Mon Examen est une application mobile d'apprentissage des cours </p>
-        videos et PDF niveau terminale sciences Mathématiques et Experimentale.
-        
-        </p>
+        <p>MExamen est une application mobile d'apprentissage des cours, 
+        vidéos et PDF niveau terminale sciences Mathématiques et Expérimentale.</p>
+        <p>Notre équipe est composée de professeurs expérimentés et passionnés par l'enseignement.</p>
     </div>
+    <footer>
+        <p>Pour en savoir plus, suivez-nous sur nos réseaux sociaux :</p>
+        <p>
+            <a href="#"><i class="fab fa-facebook"></i> Facebook</a> | 
+            <a href="#"><i class="fab fa-twitter"></i> Twitter</a> | 
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+        </p>
+    </footer>
 </body>
 </html>
